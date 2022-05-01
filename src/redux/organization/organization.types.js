@@ -1,0 +1,4 @@
+export const OrganizationActionTypes = {
+    SET_ORGANIZATIONS: 'SET_ORGANIZATIONS',
+    SET_ORGANIZATION: 'SET_ORGANIZATION'
+}
