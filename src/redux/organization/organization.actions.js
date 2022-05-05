@@ -9,3 +9,8 @@ export const setOrganization = organization => ({
     type: OrganizationActionTypes.SET_ORGANIZATION,
     payload: organization
 })
+
+export const setOrganizationMembers = organizationMembers => ({
+    type: OrganizationActionTypes.SET_ORGANIZATION_MEMBERS,
+    payload: organizationMembers
+})

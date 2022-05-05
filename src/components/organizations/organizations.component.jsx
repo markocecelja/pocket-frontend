@@ -1,38 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from 'reselect';
-import Cookies from 'universal-cookie';
-import axios from 'axios';
-import { Environments } from "../../enums/Environment";
 import { withRouter } from "react-router-dom";
 
 import { setOrganizations } from "../../redux/organization/organization.actions";
 import { selectOrganizations } from "../../redux/organization/organization.selectors";
 
 import './organizations.styles.scss';
+import { performRequest } from "../../rest/rest-util";
 
 class Organizations extends React.Component {
 
     async componentDidMount() {
         const { setOrganizations } = this.props;
 
-        const cookies = new Cookies();
-        const jwt = cookies.get("jwt");
+        const response = await performRequest('/api/organizations', 'get', null);
 
-        if (jwt) {
-            const response =
-                await axios.get(
-                    `${Environments.LOCAL}/api/organizations`,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${jwt}`
-                        }
-                    }
-                );
-
-            setOrganizations(response.data.payload);
-        }
+        setOrganizations(response.payload);
     }
 
     render() {

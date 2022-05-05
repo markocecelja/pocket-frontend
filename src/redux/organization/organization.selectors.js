@@ -11,3 +11,8 @@ export const getOrganization = createSelector(
     [selectOrganization],
     (organization) => organization.organization
 );
+
+export const getOrganizationMembers = createSelector(
+    [selectOrganization],
+    (organization) => organization.organizationMembers
+);

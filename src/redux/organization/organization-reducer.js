@@ -4,7 +4,10 @@ const INITIAL_STATE = {
     organizations: {
         content: []
     },
-    organization: null
+    organization: null,
+    organizationMembers: {
+        content: []
+    }
 }
 
 const organizationReducer = (state = INITIAL_STATE, action) => {
@@ -14,10 +17,15 @@ const organizationReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 organizations: action.payload
             }
-            case OrganizationActionTypes.SET_ORGANIZATION:
+        case OrganizationActionTypes.SET_ORGANIZATION:
             return {
                 ...state,
                 organization: action.payload
+            }
+        case OrganizationActionTypes.SET_ORGANIZATION_MEMBERS:
+            return {
+                ...state,
+                organizationMembers: action.payload
             }
         default:
             return state;

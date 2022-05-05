@@ -27,6 +27,12 @@ const Header = ({ currentUser, setCurrentUser }) => (
                         <Link className="nav-link" to="/organizations">ORGANIZACIJE</Link>
                     </li>
                     {
+                        currentUser && currentUser.roles.some(role => role.id === "1") && 
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/administration">ADMINISTRACIJA</Link>
+                        </li>
+                    }
+                    {
                         currentUser && <li className="nav-item">
                             <Link className="nav-link" onClick={() => logOut(setCurrentUser)} to="/signIn">ODJAVI SE</Link>
                         </li>
