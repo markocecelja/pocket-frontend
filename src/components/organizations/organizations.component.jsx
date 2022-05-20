@@ -16,7 +16,7 @@ class Organizations extends React.Component {
 
         const response = await performRequest('/api/organizations', 'get', null);
 
-        setOrganizations(response.payload);
+        setOrganizations(response ? response.payload : { content: [] });
     }
 
     render() {

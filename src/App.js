@@ -16,6 +16,7 @@ import Organizations from './components/organizations/organizations.component';
 import Organization from './components/organizations/organization.component';
 import AdministrationPage from './components/administration/administration-page-component';
 import { performRequest } from './rest/rest-util';
+import { Toaster } from 'react-hot-toast';
 
 class App extends React.Component {
 
@@ -24,7 +25,7 @@ class App extends React.Component {
 
     const response = await performRequest('/api/users/current', 'get', null);
 
-    setCurrentUser(response.payload);
+    setCurrentUser(response ? response.payload : null);
   }
 
   render() {
@@ -33,6 +34,7 @@ class App extends React.Component {
 
     return (
       <div className="App">
+        <div><Toaster /></div>
         {currentUser && <Header />}
         <Switch>
           <Route exact path='/' render={() => !currentUser ? (<Redirect to='/signIn'></Redirect>) : <HomePage></HomePage>}></Route>

@@ -46,7 +46,9 @@ class CategoryComponent extends React.Component {
 
         const response = await performRequest('/api/categories', 'get', null);
 
-        setCategories(response.payload);
+        setCategories(response ? response.payload : { content: [] });
+
+        this.resetState();
     }
 
 

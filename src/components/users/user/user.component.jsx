@@ -10,7 +10,7 @@ const User = ({organizationMember}) => (
             </div>
             <div className="col-md-7 col-sm-7">
                 <h5>{organizationMember.user.firstName + " " + organizationMember.user.lastName}</h5>
-                <p>{organizationMember.role.id == "1" ? "ADMIN" : "ČLAN"}</p>
+                <p>{organizationMember.role.id === "1" ? "ADMIN" : "ČLAN"}</p>
             </div>
         </div>
     </div>

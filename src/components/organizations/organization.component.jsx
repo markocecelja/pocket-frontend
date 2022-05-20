@@ -50,7 +50,7 @@ class Organization extends React.Component {
 
         const response = await performRequest(`/api/organizations/${id}`, 'put', body);
 
-        setOrganization(response.payload);
+        setOrganization(response ? response.payload : null);
     }
 
     async componentDidMount() {
@@ -60,12 +60,12 @@ class Organization extends React.Component {
 
         const response = await performRequest(`/api/organizations/${id}`, 'get', null);
 
-        setOrganization(response.payload);
-        this.setState(response.payload);
+        setOrganization(response ? response.payload : null);
+        this.setState(response ? response.payload : null);
 
-        const memberResponse = await performRequest(`/api/organizations/${id}/members`, 'get', null);
+        const membersResponse = await performRequest(`/api/organizations/${id}/members`, 'get', null);
 
-        setOrganizationMembers(memberResponse.payload);
+        setOrganizationMembers(membersResponse ? membersResponse.payload : { content: [] });
     }
 
     render() {
@@ -108,26 +108,35 @@ class Organization extends React.Component {
                     <h1>{organization && organization.name}</h1>
                     <p>{organization && organization.description}</p>
                     <p>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#updateOrganization">
-                            Uredi
-                        </button>
+                        {organization && organization.currentUserMember ?
+                            < button type="button" data-bs-toggle="modal" data-bs-target="#updateOrganization">
+                                Uredi
+                            </button>
+                            :
+                            < button type="button" data-bs-toggle="modal" data-bs-target="#updateOrganization">
+                                Pridruži se
+                            </button>
+                        }
                     </p>
                 </div>
-                <div className="organization-tab">
-                    <nav>
-                        <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                            <button className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Ponude</button>
-                            <button className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Članovi</button>
-                        </div>
-                    </nav>
-                    <div className="tab-content" id="nav-tabContent">
-                        <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">TO DO ponude</div>
-                        <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                            <Users></Users>
+                {
+                    organization && organization.currentUserMember &&
+                    <div className="organization-tab">
+                        <nav>
+                            <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                                <button className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Ponude</button>
+                                <button className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Članovi</button>
+                            </div>
+                        </nav>
+                        <div className="tab-content" id="nav-tabContent">
+                            <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">TO DO ponude</div>
+                            <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <Users></Users>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                }
+            </div >
         );
     }
 }

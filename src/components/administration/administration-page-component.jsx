@@ -39,10 +39,9 @@ class AdministrationPage extends React.Component {
 
         await performRequest('/api/categories', 'post', body);
 
-
         const response = await performRequest('/api/categories', 'get', null);
 
-        setCategories(response.payload);
+        setCategories(response ? response.payload : { content: [] });
         this.setState({ name: '' })
     }
 
@@ -51,7 +50,7 @@ class AdministrationPage extends React.Component {
 
         const response = await performRequest('/api/categories', 'get', null);
 
-        setCategories(response.payload);
+        setCategories(response ? response.payload : { content: [] });
     }
 
     render() {
