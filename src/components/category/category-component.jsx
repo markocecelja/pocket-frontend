@@ -8,6 +8,8 @@ import { setCategories } from "../../redux/category/category.actions";
 import BootstrapSwitchButton from "bootstrap-switch-button-react";
 import { performRequest } from "../../rest/rest-util";
 
+import './category.styles.scss';
+
 class CategoryComponent extends React.Component {
 
     constructor(props) {
@@ -94,7 +96,7 @@ class CategoryComponent extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <EditIcon data-bs-toggle="modal" data-bs-target={"#updateCategory-" + category.id}></EditIcon>
+                    <EditIcon className="edit-icon" data-bs-toggle="modal" data-bs-target={"#updateCategory-" + category.id}></EditIcon>
                 </td>
             </tr>
         );

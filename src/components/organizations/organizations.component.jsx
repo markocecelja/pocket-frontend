@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { withRouter } from "react-router-dom";
 
 import { setOrganizations } from "../../redux/organization/organization.actions";
+import { setCategories } from "../../redux/category/category.actions";
 import { selectOrganizations } from "../../redux/organization/organization.selectors";
 
 import './organizations.styles.scss';
@@ -12,11 +13,13 @@ import { performRequest } from "../../rest/rest-util";
 class Organizations extends React.Component {
 
     async componentDidMount() {
-        const { setOrganizations } = this.props;
+        const { setOrganizations, setCategories } = this.props;
 
-        const response = await performRequest('/api/organizations', 'get', null);
+        const organizationsResponse = await performRequest('/api/organizations', 'get', null);
+        setOrganizations(organizationsResponse ? organizationsResponse.payload : { content: [] });
 
-        setOrganizations(response ? response.payload : { content: [] });
+        const categoriesResponse = await performRequest('/api/categories?active=true', 'get', null);
+        setCategories(categoriesResponse ? categoriesResponse.payload : { content: [] });
     }
 
     render() {
@@ -59,7 +62,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setOrganizations: organizations => dispatch(setOrganizations(organizations))
+    setOrganizations: organizations => dispatch(setOrganizations(organizations)),
+    setCategories: categories => dispatch(setCategories(categories))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Organizations));
