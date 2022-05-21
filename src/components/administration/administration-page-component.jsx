@@ -8,7 +8,7 @@ import { selectCategories } from "../../redux/category/category.selectors";
 import Category from "../category/category-component";
 import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
-import { performRequest } from "../../rest/rest-util";
+import { performRequest } from "../../utils/rest-util";
 
 class AdministrationPage extends React.Component {
 

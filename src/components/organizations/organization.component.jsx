@@ -11,7 +11,7 @@ import { setPosts } from "../../redux/post/post.actions";
 
 import './organization.styles.scss';
 import BootstrapSwitchButton from "bootstrap-switch-button-react";
-import { performRequest } from "../../rest/rest-util";
+import { performRequest } from "../../utils/rest-util";
 import Posts from "../posts/posts.component"
 import OrganizationMembers from "../organization-members/organization-members.component"
 

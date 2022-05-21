@@ -6,7 +6,7 @@ import FormInput from "../form-input/form-input.component";
 
 import { setCategories } from "../../redux/category/category.actions";
 import BootstrapSwitchButton from "bootstrap-switch-button-react";
-import { performRequest } from "../../rest/rest-util";
+import { performRequest } from "../../utils/rest-util";
 
 import './category.styles.scss';
 

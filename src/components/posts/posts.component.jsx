@@ -15,7 +15,7 @@ import FormInput from "../form-input/form-input.component";
 import { selectCategories } from "../../redux/category/category.selectors";
 import { getOrganization } from "../../redux/organization/organization.selectors";
 import { setPosts } from "../../redux/post/post.actions";
-import { performRequest } from "../../rest/rest-util";
+import { performRequest } from "../../utils/rest-util";
 
 class Posts extends React.Component {
     constructor(props) {

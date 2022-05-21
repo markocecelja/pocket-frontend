@@ -8,7 +8,7 @@ import CustomButton from "../custom-button/custom-button.component";
 import { setCurrentUser } from '../../redux/user/user.actions';
 
 import './sign-in.styles.scss';
-import { performRequest } from "../../rest/rest-util";
+import { performRequest } from "../../utils/rest-util";
 
 class SignIn extends React.Component {
     constructor(props) {

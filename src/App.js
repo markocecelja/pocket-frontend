@@ -15,7 +15,7 @@ import './App.css';
 import Organizations from './components/organizations/organizations.component';
 import Organization from './components/organizations/organization.component';
 import AdministrationPage from './components/administration/administration-page-component';
-import { performRequest } from './rest/rest-util';
+import { performRequest } from './utils/rest-util';
 import { Toaster } from 'react-hot-toast';
 
 class App extends React.Component {

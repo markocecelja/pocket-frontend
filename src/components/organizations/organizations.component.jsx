@@ -8,7 +8,7 @@ import { setCategories } from "../../redux/category/category.actions";
 import { selectOrganizations } from "../../redux/organization/organization.selectors";
 
 import './organizations.styles.scss';
-import { performRequest } from "../../rest/rest-util";
+import { performRequest } from "../../utils/rest-util";
 
 class Organizations extends React.Component {
 
