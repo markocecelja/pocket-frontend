@@ -13,10 +13,10 @@ import Header from './components/header/header.component';
 
 import './App.css';
 import Organizations from './components/organizations/organizations.component';
-import Organization from './components/organizations/organization.component';
-import AdministrationPage from './components/administration/administration-page-component';
+import AdministrationPage from './components/administration/administration-page.component';
 import { performRequest } from './utils/rest-util';
 import { Toaster } from 'react-hot-toast';
+import OrganizationPage from './components/organization-page/organization-page.component';
 
 class App extends React.Component {
 
@@ -37,11 +37,11 @@ class App extends React.Component {
         <div><Toaster /></div>
         {currentUser && <Header />}
         <Switch>
-          <Route exact path='/' render={() => !currentUser ? (<Redirect to='/signIn'></Redirect>) : <HomePage></HomePage>}></Route>
-          <Route exact path='/organizations' render={() => !currentUser ? (<Redirect to='/signIn'></Redirect>) : <Organizations></Organizations>}></Route>
-          <Route exact path='/organizations/:id' render={() => !currentUser ? (<Redirect to='/signIn'></Redirect>) : <Organization></Organization>}></Route>
-          <Route exact path='/administration' render={() => !currentUser || !currentUser.roles.some(role => role.id === "1") ? (<Redirect to='/'></Redirect>) : <AdministrationPage></AdministrationPage>}></Route>
-          <Route exact path='/signIn' render={() => currentUser ? (<Redirect to='/'></Redirect>) : <SignIn></SignIn>}></Route>
+          <Route exact path='/' render={() => !currentUser ? (<Redirect to='/signIn'></Redirect>) : <HomePage/>}></Route>
+          <Route exact path='/organizations' render={() => !currentUser ? (<Redirect to='/signIn'></Redirect>) : <Organizations/>}></Route>
+          <Route exact path='/organizations/:id' render={() => !currentUser ? (<Redirect to='/signIn'></Redirect>) : <OrganizationPage/>}></Route>
+          <Route exact path='/administration' render={() => !currentUser || !currentUser.roles.some(role => role.id === "1") ? (<Redirect to='/'></Redirect>) : <AdministrationPage/>}></Route>
+          <Route exact path='/signIn' render={() => currentUser ? (<Redirect to='/'></Redirect>) : <SignIn/>}></Route>
         </Switch>
       </div>
     );

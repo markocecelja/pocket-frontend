@@ -1,8 +1,9 @@
 import React from "react";
+import ReactPaginate from "react-paginate";
 
 import './list-view.styles.scss';
 
-const ListView = ({children}) => {
+const ListView = ({children, pageCount, handlePageChanged}) => {
 
     return (
 
@@ -14,6 +15,25 @@ const ListView = ({children}) => {
                     </div>
                 </div>
             </div>
+            <ReactPaginate
+                    previousLabel="Prethodna"
+                    nextLabel="Sljedeća"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={handlePageChanged}
+                    containerClassName="pagination"
+                    activeClassName="active"
+                />
         </div>
     );
 }

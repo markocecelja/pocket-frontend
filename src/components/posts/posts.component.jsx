@@ -8,7 +8,6 @@ import { selectPosts } from "../../redux/post/post.selectors";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import CustomButton from "../custom-button/custom-button.component";
-import ReactPaginate from 'react-paginate';
 
 import './posts.styles.scss'
 import FormInput from "../form-input/form-input.component";
@@ -110,7 +109,7 @@ class Posts extends React.Component {
                     </div>
                 </div>
                 <CustomButton className="new-post" data-bs-toggle="modal" data-bs-target="#newPost">Nova</CustomButton>
-                <ListView>
+                <ListView pageCount={posts.totalPages} handlePageChanged={this.handlePageClick}>
                     {posts.content.map(post =>
                         <ListItem clickable={true} cover={<EventIcon />}>
                             <h5>{post.title}</h5>
@@ -119,25 +118,6 @@ class Posts extends React.Component {
                         </ListItem>
                     )}
                 </ListView>
-                <ReactPaginate
-                    previousLabel="Prethodna"
-                    nextLabel="Sljedeća"
-                    pageClassName="page-item"
-                    pageLinkClassName="page-link"
-                    previousClassName="page-item"
-                    previousLinkClassName="page-link"
-                    nextClassName="page-item"
-                    nextLinkClassName="page-link"
-                    breakLabel="..."
-                    breakClassName="page-item"
-                    breakLinkClassName="page-link"
-                    pageCount={posts.totalPages}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageClick}
-                    containerClassName="pagination"
-                    activeClassName="active"
-                />
             </div>
         );
     }
