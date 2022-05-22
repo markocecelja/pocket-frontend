@@ -17,6 +17,8 @@ import AdministrationPage from './components/administration/administration-page.
 import { performRequest } from './utils/rest-util';
 import { Toaster } from 'react-hot-toast';
 import OrganizationPage from './components/organization-page/organization-page.component';
+import { checkHasRole } from './utils/role-util';
+import { Roles } from './enums/Role';
 
 class App extends React.Component {
 
@@ -40,7 +42,7 @@ class App extends React.Component {
           <Route exact path='/' render={() => !currentUser ? (<Redirect to='/signIn'></Redirect>) : <HomePage/>}></Route>
           <Route exact path='/organizations' render={() => !currentUser ? (<Redirect to='/signIn'></Redirect>) : <Organizations/>}></Route>
           <Route exact path='/organizations/:id' render={() => !currentUser ? (<Redirect to='/signIn'></Redirect>) : <OrganizationPage/>}></Route>
-          <Route exact path='/administration' render={() => !currentUser || !currentUser.roles.some(role => role.id === "1") ? (<Redirect to='/'></Redirect>) : <AdministrationPage/>}></Route>
+          <Route exact path='/administration' render={() => !currentUser || !checkHasRole(currentUser, Roles.SYSTEM_ADMIN) ? (<Redirect to='/'></Redirect>) : <AdministrationPage/>}></Route>
           <Route exact path='/signIn' render={() => currentUser ? (<Redirect to='/'></Redirect>) : <SignIn/>}></Route>
         </Switch>
       </div>

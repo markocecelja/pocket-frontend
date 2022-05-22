@@ -15,6 +15,7 @@ import { selectCategories } from "../../redux/category/category.selectors";
 import { getOrganization } from "../../redux/organization/organization.selectors";
 import { setPosts } from "../../redux/post/post.actions";
 import { performRequest } from "../../utils/rest-util";
+import { withRouter } from "react-router-dom";
 
 class Posts extends React.Component {
     constructor(props) {
@@ -50,6 +51,8 @@ class Posts extends React.Component {
 
         event.preventDefault();
 
+        let { id } = this.props.match.params;
+
         const { title, description, category } = this.state;
         const { organization } = this.props;
         const { setPosts } = this.props;
@@ -63,7 +66,7 @@ class Posts extends React.Component {
 
         await performRequest(`/api/posts`, 'post', body);
 
-        const postResponse = await performRequest(`/api/posts?size=4`, 'get', null);
+        const postResponse = await performRequest(`/api/posts?organizationId=${id}&size=4`, 'get', null);
         setPosts(postResponse ? postResponse.payload : null);
     }
 
@@ -71,7 +74,9 @@ class Posts extends React.Component {
 
         const { setPosts } = this.props;
 
-        const postResponse = await performRequest(`/api/posts?page=${event.selected}&size=4`, 'get', null);
+        let { id } = this.props.match.params;
+
+        const postResponse = await performRequest(`/api/posts?organizationId=${id}&page=${event.selected}&size=4`, 'get', null);
         setPosts(postResponse ? postResponse.payload : null);
     }
 
@@ -133,4 +138,4 @@ const mapDispatchToProps = dispatch => ({
     setPosts: posts => dispatch(setPosts(posts))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Posts);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts));
