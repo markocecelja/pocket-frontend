@@ -19,6 +19,7 @@ import { Toaster } from 'react-hot-toast';
 import OrganizationPage from './components/organization-page/organization-page.component';
 import { checkHasRole } from './utils/role-util';
 import { Roles } from './enums/Role';
+import OrganizationsPage from './components/organizations-page/organizations-page.component';
 
 class App extends React.Component {
 
@@ -39,11 +40,15 @@ class App extends React.Component {
         <div><Toaster /></div>
         {currentUser && <Header />}
         <Switch>
-          <Route exact path='/' render={() => !currentUser ? (<Redirect to='/signIn'></Redirect>) : <HomePage/>}></Route>
-          <Route exact path='/organizations' render={() => !currentUser ? (<Redirect to='/signIn'></Redirect>) : <Organizations/>}></Route>
-          <Route exact path='/organizations/:id' render={() => !currentUser ? (<Redirect to='/signIn'></Redirect>) : <OrganizationPage/>}></Route>
-          <Route exact path='/administration' render={() => !currentUser || !checkHasRole(currentUser, Roles.SYSTEM_ADMIN) ? (<Redirect to='/'></Redirect>) : <AdministrationPage/>}></Route>
-          <Route exact path='/signIn' render={() => currentUser ? (<Redirect to='/'></Redirect>) : <SignIn/>}></Route>
+          <Route exact path='/signIn' render={() => currentUser ? (<Redirect to='/'></Redirect>) : <SignIn />} />
+          {currentUser &&
+            <>
+              <Route exact path='/' component={HomePage} />
+              <Route exact path='/organizations' component={OrganizationsPage} />
+              <Route exact path='/organizations/:id' component={OrganizationPage} />
+              <Route exact path='/administration' render={() => !checkHasRole(currentUser, Roles.SYSTEM_ADMIN) ? (<Redirect to='/'></Redirect>) : <AdministrationPage />} />
+            </>
+          }
         </Switch>
       </div>
     );

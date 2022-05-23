@@ -1,10 +1,10 @@
 import React from "react";
 
-const ListItem = ({ children, cover, clickable }) => {
+const ListItem = ({ children, cover, clickable, ...props }) => {
 
     return (
 
-        <div className={`item${clickable ? " clickable" : ""}`}>
+        <div className={`item${clickable ? " clickable" : ""}`} {...props}>
             <div className="row">
                 <div className="col-md-2 col-sm-2">
                     {cover}

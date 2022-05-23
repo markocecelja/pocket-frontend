@@ -9,6 +9,8 @@ import { performRequest } from "../../utils/rest-util";
 import ListItem from "../list-view/list-item/list-item.component";
 import ListView from "../list-view/list-view.component";
 
+import { ReactComponent as Avatar } from "../../assets/avatar.svg"
+
 const OrganizationMembers = ({ organizationMembers, setOrganizationMembers, ...props }) => {
 
     const handlePageClick = async event => {
@@ -21,7 +23,7 @@ const OrganizationMembers = ({ organizationMembers, setOrganizationMembers, ...p
     return (
         <ListView pageCount={organizationMembers.totalPages} handlePageChanged={handlePageClick}>
             {organizationMembers.content.map(organizationMember =>
-                <ListItem cover={<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="image" className="profile-photo-lg" />}>
+                <ListItem cover={<Avatar />}>
                     <h5>{organizationMember.user.firstName + " " + organizationMember.user.lastName}</h5>
                     <p>{organizationMember.role.id === "1" ? "ADMIN" : "ČLAN"}</p>
                 </ListItem>

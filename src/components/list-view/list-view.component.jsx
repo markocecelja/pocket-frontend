@@ -3,7 +3,7 @@ import ReactPaginate from "react-paginate";
 
 import './list-view.styles.scss';
 
-const ListView = ({children, pageCount, handlePageChanged}) => {
+const ListView = ({ children, pageCount, handlePageChanged }) => {
 
     return (
 
@@ -15,7 +15,8 @@ const ListView = ({children, pageCount, handlePageChanged}) => {
                     </div>
                 </div>
             </div>
-            <ReactPaginate
+            {pageCount > 0 &&
+                <ReactPaginate
                     previousLabel="Prethodna"
                     nextLabel="Sljedeća"
                     pageClassName="page-item"
@@ -34,6 +35,7 @@ const ListView = ({children, pageCount, handlePageChanged}) => {
                     containerClassName="pagination"
                     activeClassName="active"
                 />
+            }
         </div>
     );
 }

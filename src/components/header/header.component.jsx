@@ -24,10 +24,13 @@ const Header = ({ currentUser, setCurrentUser }) => (
             <div className="collapse navbar-collapse" id="main-navigation">
                 <ul className="navbar-nav">
                     <li className="nav-item">
+                        <Link className="nav-link" to="/">POČETNA</Link>
+                    </li>
+                    <li className="nav-item">
                         <Link className="nav-link" to="/organizations">ORGANIZACIJE</Link>
                     </li>
                     {
-                        currentUser && currentUser.roles.some(role => role.id === "1") && 
+                        currentUser && currentUser.roles.some(role => role.id === "1") &&
                         <li className="nav-item">
                             <Link className="nav-link" to="/administration">ADMINISTRACIJA</Link>
                         </li>

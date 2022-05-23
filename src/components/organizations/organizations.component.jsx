@@ -8,53 +8,24 @@ import { setCategories } from "../../redux/category/category.actions";
 import { selectOrganizations } from "../../redux/organization/organization.selectors";
 
 import './organizations.styles.scss';
-import { performRequest } from "../../utils/rest-util";
 
-class Organizations extends React.Component {
+import ListItem from "../list-view/list-item/list-item.component";
+import { ReactComponent as OrganizationIcon } from "../../assets/organization.svg"
+import ListView from "../list-view/list-view.component";
 
-    async componentDidMount() {
-        const { setOrganizations, setCategories } = this.props;
+const Organizations = ({ organizations, ...props }) => {
 
-        const organizationsResponse = await performRequest('/api/organizations', 'get', null);
-        setOrganizations(organizationsResponse ? organizationsResponse.payload : { content: [] });
-
-        const categoriesResponse = await performRequest('/api/categories?active=true', 'get', null);
-        setCategories(categoriesResponse ? categoriesResponse.payload : { content: [] });
-    }
-
-    render() {
-
-        const { organizations } = this.props;
-
-        return (
-            <div className="container table-responsive">
-                <table className="table table-striped table-hover">
-                    <thead className="thead-dark">
-                        <tr>
-                            <th>Naziv</th>
-                            <th>Opis</th>
-                            <th>Aktivna</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {organizations.content.map(organization =>
-                            <tr key={'organization-' + organization.id} className="clickable" onClick={() => this.props.history.push(`/organizations/${organization.id}`)}>
-                                <td>
-                                    <div>{organization.name}</div>
-                                </td>
-                                <td>
-                                    <div>{organization.description}</div>
-                                </td>
-                                <td>
-                                    <div>{organization.active ? "DA" : "NE"}</div>
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
-        );
-    }
+    return (
+        <ListView pageCount={organizations.totalPages} {...props}>
+            {organizations.content.map(organization =>
+                <ListItem onClick={() => props.history.push(`/organizations/${organization.id}`)} clickable={true} cover={<OrganizationIcon />}>
+                    <h5>{organization.name}</h5>
+                    <div>{organization.description}</div>
+                    <span className={`badge ${organization.active ? "bg-success" : "bg-danger"}`}>{organization.active ? "Aktivna" : "Neaktivna"}</span>
+                </ListItem>
+            )}
+        </ListView>
+    );
 }
 
 const mapStateToProps = createStructuredSelector({

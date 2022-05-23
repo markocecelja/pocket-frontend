@@ -14,6 +14,11 @@ import BootstrapSwitchButton from "bootstrap-switch-button-react";
 import { performRequest } from "../../../utils/rest-util";
 import Posts from "../../posts/posts.component"
 import OrganizationMembers from "../../organization-members/organization-members.component"
+import Card from "../../card/card.component";
+import { ReactComponent as OrganizationIcon } from "../../../assets/organization.svg"
+import { selectCurrentUser } from "../../../redux/user/user.selectors";
+import { checkHasRole } from "../../../utils/role-util";
+import { Roles } from "../../../enums/Role";
 
 class Organization extends React.Component {
 
@@ -73,7 +78,7 @@ class Organization extends React.Component {
 
     render() {
 
-        const { organization } = this.props;
+        const { organization, currentUser } = this.props;
 
         return (
             <>
@@ -90,15 +95,17 @@ class Organization extends React.Component {
                                         <div className="modal-body">
                                             <FormInput name="name" type="text" value={this.state.name} handleChange={this.handleChange} required label="Naziv" />
                                             <FormInput name="description" type="text" value={this.state.description} handleChange={this.handleChange} required label="Opis" />
-                                            <BootstrapSwitchButton
-                                                checked={this.state.active}
-                                                onlabel='Aktivna'
-                                                offlabel='Neaktivna'
-                                                onChange={(checked) => {
-                                                    this.setState({ active: checked })
-                                                }}
-                                                width={150}
-                                            />
+                                            {checkHasRole(currentUser, Roles.SYSTEM_ADMIN) &&
+                                                < BootstrapSwitchButton
+                                                    checked={this.state.active}
+                                                    onlabel='Aktivna'
+                                                    offlabel='Neaktivna'
+                                                    onChange={(checked) => {
+                                                        this.setState({ active: checked })
+                                                    }}
+                                                    width={150}
+                                                />
+                                            }
                                         </div>
                                         <div className="modal-footer">
                                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
@@ -108,16 +115,14 @@ class Organization extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="card">
-                            <img src="" alt="Slika" style={{ width: '100%' }} />
+                        <Card>
+                            <OrganizationIcon />
                             <h1>{organization && organization.name}</h1>
                             <p>{organization && organization.description}</p>
-                            <p>
-                                < button type="button" data-bs-toggle="modal" data-bs-target="#updateOrganization">
-                                    Uredi
-                                </button>
-                            </p>
-                        </div>
+                            < button type="button" data-bs-toggle="modal" data-bs-target="#updateOrganization">
+                                Uredi
+                            </button>
+                        </Card>
                         <div className="organization-tab">
                             <nav>
                                 <div className="nav nav-tabs" id="nav-tab" role="tablist">
@@ -142,6 +147,7 @@ class Organization extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser,
     organization: getOrganization
 });
 

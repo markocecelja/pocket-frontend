@@ -11,6 +11,8 @@ import { getOrganization } from "../../../redux/organization/organization.select
 import './organization.styles.scss';
 import { performRequest } from "../../../utils/rest-util";
 
+import { ReactComponent as OrganizationIcon } from "../../../assets/organization.svg"
+
 class JoinableOrganization extends React.Component {
 
     constructor(props) {
@@ -81,14 +83,12 @@ class JoinableOrganization extends React.Component {
                             </div>
                         </div>
                         <div className="card">
-                            <img src="" alt="Slika" style={{ width: '100%' }} />
+                            <OrganizationIcon />
                             <h1>{organization && organization.name}</h1>
                             <p>{organization && organization.description}</p>
-                            <p>
-                                < button type="button" data-bs-toggle="modal" data-bs-target="#joinOrganization">
-                                    Pridruži se
-                                </button>
-                            </p>
+                            < button type="button" data-bs-toggle="modal" data-bs-target="#joinOrganization">
+                                Pridruži se
+                            </button>
                         </div>
                     </div>
                 }
