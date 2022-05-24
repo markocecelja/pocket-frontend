@@ -17,30 +17,32 @@ function logOut(setCurrentUser) {
 
 const Header = ({ currentUser, setCurrentUser }) => (
     <div className="header">
-        <nav className="navbar navbar-expand-md">
-            <button className="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#main-navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="main-navigation">
-                <ul className="navbar-nav">
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/">POČETNA</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/organizations">ORGANIZACIJE</Link>
-                    </li>
-                    {
-                        currentUser && currentUser.roles.some(role => role.id === "1") &&
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav">
                         <li className="nav-item">
-                            <Link className="nav-link" to="/administration">ADMINISTRACIJA</Link>
+                            <Link className="nav-link" to="/">POČETNA</Link>
                         </li>
-                    }
-                    {
-                        currentUser && <li className="nav-item">
-                            <Link className="nav-link" onClick={() => logOut(setCurrentUser)} to="/signIn">ODJAVI SE</Link>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/organizations">ORGANIZACIJE</Link>
                         </li>
-                    }
-                </ul>
+                        {
+                            currentUser && currentUser.roles.some(role => role.id === "1") &&
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/administration">ADMINISTRACIJA</Link>
+                            </li>
+                        }
+                        {
+                            currentUser && <li className="nav-item">
+                                <Link className="nav-link" onClick={() => logOut(setCurrentUser)} to="/signIn">ODJAVI SE</Link>
+                            </li>
+                        }
+                    </ul>
+                </div>
             </div>
         </nav>
     </div>
