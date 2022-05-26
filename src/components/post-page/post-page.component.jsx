@@ -147,7 +147,7 @@ class PostPage extends React.Component {
                                 <span className="badge bg-info text-dark">{post.category.name}</span>
                                 <span className={`badge ${post.active ? "bg-success" : "bg-danger"}`}>{post.active ? "Aktivna" : "Neaktivna"}</span>
                             </div>
-                            <div className="description">
+                            <div className="large-text">
                                 {post.description}
                             </div>
                             < button type="button" data-bs-toggle="modal" data-bs-target="#updatePost">

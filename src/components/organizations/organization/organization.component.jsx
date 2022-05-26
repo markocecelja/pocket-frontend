@@ -122,7 +122,7 @@ class Organization extends React.Component {
                         <Card>
                             <OrganizationIcon />
                             <h1>{organization && organization.name}</h1>
-                            <div className="description">{organization && organization.description}</div>
+                            <div className="large-text">{organization && organization.description}</div>
                             < button type="button" data-bs-toggle="modal" data-bs-target="#updateOrganization">
                                 Uredi
                             </button>

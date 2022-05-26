@@ -8,13 +8,17 @@ import { ReactComponent as ChatIcon } from "../../assets/chat.svg"
 import ListView from "../list-view/list-view.component";
 import { getChats } from "../../redux/chat/chat.selectors";
 
-const Chats = ({ chats, ...props }) => {
+import { checkHasRole } from "../../utils/role-util";
+import { Roles } from '../../enums/Role';
+import { selectCurrentUser } from "../../redux/user/user.selectors";
+
+const Chats = ({ chats, currentUser, ...props }) => {
 
     return (
         <ListView pageCount={chats.totalPages} {...props}>
             {chats.content.map(chat =>
                 <ListItem onClick={() => props.history.push(`/chats/${chat.id}`)} clickable={true} cover={<ChatIcon />}>
-                    <h5>{`${chat.user.firstName} ${chat.user.lastName}`}</h5>
+                    <h5>{currentUser && !checkHasRole(currentUser, Roles.STUDENT) ? `${chat.user.firstName} ${chat.user.lastName}` :  `${chat.post.title}`}</h5>
                 </ListItem>
             )}
         </ListView>
@@ -22,7 +26,8 @@ const Chats = ({ chats, ...props }) => {
 }
 
 const mapStateToProps = createStructuredSelector({
-    chats: getChats
+    chats: getChats,
+    currentUser: selectCurrentUser
 });
 
 export default withRouter(connect(mapStateToProps)(Chats));

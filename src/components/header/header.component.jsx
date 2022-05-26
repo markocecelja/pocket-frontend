@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import { setCurrentUser } from '../../redux/user/user.actions';
 
 import './header.styles.scss';
+import { checkHasRole } from "../../utils/role-util";
+import { Roles } from '../../enums/Role';
 
 function logOut(setCurrentUser) {
     setCurrentUser(null);
@@ -27,11 +29,14 @@ const Header = ({ currentUser, setCurrentUser }) => (
                         <li className="nav-item">
                             <Link className="nav-link" to="/">POČETNA</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/organizations">ORGANIZACIJE</Link>
-                        </li>
                         {
-                            currentUser && currentUser.roles.some(role => role.id === "1") &&
+                            currentUser && !checkHasRole(currentUser, Roles.STUDENT) &&
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/organizations">ORGANIZACIJE</Link>
+                            </li>
+                        }
+                        {
+                            currentUser && checkHasRole(currentUser, Roles.SYSTEM_ADMIN) &&
                             <li className="nav-item">
                                 <Link className="nav-link" to="/administration">ADMINISTRACIJA</Link>
                             </li>

@@ -97,9 +97,9 @@ class ChatPage extends React.Component {
 
         return (
             <>
-                {messages.length != 0 &&
-                    <div className="chat">
-                        <Card>
+                <div className="chat">
+                    <Card>
+                        {messages.length != 0 &&
                             <section id="scrollableMessages" className="messages" style={{ height: 300, overflow: "auto", display: "flex", flexDirection: "column-reverse" }}>
                                 <InfiniteScroll
                                     dataLength={messages.length}
@@ -117,7 +117,7 @@ class ChatPage extends React.Component {
                                 >
                                     {messages.map(message =>
                                         <div className={message.createdByCurrentUser ? "msg msg--right" : "msg msg--left"}>
-                                            <blockquote>
+                                            <blockquote className="large-text">
                                                 {message.text}
                                                 <div className="date">{Moment(message.createdDateTime).format('DD.MM.YYYY. HH:mm:ss')}</div>
                                             </blockquote>
@@ -125,13 +125,13 @@ class ChatPage extends React.Component {
                                     )}
                                 </InfiniteScroll>
                             </section>
-                            <form className="message-form" onSubmit={this.handleSubmit}>
-                                <FormInput name="message" type="text" value={this.state.message} handleChange={this.handleChange} required label="Poruka... Za slanje pritisnite enter" />
-                                <button hidden type="submit" className="btn btn-primary" />
-                            </form>
-                        </Card>
-                    </div>
-                }
+                        }
+                        <form className="message-form" onSubmit={this.handleSubmit}>
+                            <FormInput name="message" type="text" value={this.state.message} handleChange={this.handleChange} required label="Poruka... Za slanje pritisnite enter" />
+                            <button hidden type="submit" className="btn btn-primary" />
+                        </form>
+                    </Card>
+                </div>
                 <SockJsClient
                     url={`${Environments.LOCAL}/chat`}
                     topics={['/topic/messages']}
