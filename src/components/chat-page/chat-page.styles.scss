@@ -1,0 +1,85 @@
+.chat {
+
+    width: 90%;
+    margin: 5%;
+
+    .card {
+        padding-top: 2%;
+    }
+
+    .message-form {
+        width: 95%;
+    }
+
+    .messages {
+
+        display: flex;
+        flex-direction: column-reverse;
+        width: 95%;
+
+        .msg {
+            position: relative;
+            margin-bottom: 2em;
+
+            .date {
+                font-size: 80%;
+            }
+        }
+
+        blockquote {
+            border-radius: .35em;
+            position: relative;
+            display: inline-block;
+            margin: 0;
+            max-width: 60%;
+            padding: .5%;
+        }
+
+        .msg--right blockquote::after,
+        .msg--left blockquote::before {
+            position: absolute;
+            display: block;
+            content: '';
+            width: 0;
+            height: 0;
+        }
+
+        .msg--right blockquote {
+            background-color: #FFBB73;
+        }
+
+        .msg--right blockquote::after {
+            border: .5em solid #FFBB73;
+            border-color: #FFBB73 transparent transparent #FFBB73;
+            top: .5em;
+            right: -1em;
+        }
+
+        .msg--left blockquote {
+            background-color: #0099cc;
+            margin-left: 1em;
+        }
+
+        .msg--left blockquote::before {
+            border: .5em solid #0099cc;
+            border-color: #0099cc #0099cc transparent transparent;
+            top: .5em;
+            left: -1em;
+        }
+
+        .msg--right {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .msg--left {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .msg--right blockquote {
+            order: -1;
+            margin-right: 1em;
+        }
+    }
+}

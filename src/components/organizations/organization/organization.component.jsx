@@ -19,6 +19,7 @@ import { ReactComponent as OrganizationIcon } from "../../../assets/organization
 import { selectCurrentUser } from "../../../redux/user/user.selectors";
 import { checkHasRole } from "../../../utils/role-util";
 import { Roles } from "../../../enums/Role";
+import { setCategories } from "../../../redux/category/category.actions";
 
 class Organization extends React.Component {
 
@@ -59,7 +60,7 @@ class Organization extends React.Component {
     }
 
     async componentDidMount() {
-        const { setOrganization, setOrganizationMembers, setPosts } = this.props;
+        const { setOrganization, setOrganizationMembers, setPosts, setCategories } = this.props;
 
         let { id } = this.props.match.params;
 
@@ -74,6 +75,9 @@ class Organization extends React.Component {
 
         const posts = await performRequest(`/api/posts?organizationId=${id}&size=4`, 'get', null);
         setPosts(posts ? posts.payload : { content: [] });
+
+        const categoriesResponse = await performRequest('/api/categories?active=true', 'get', null);
+        setCategories(categoriesResponse ? categoriesResponse.payload : { content: [] });
     }
 
     render() {
@@ -108,7 +112,7 @@ class Organization extends React.Component {
                                             }
                                         </div>
                                         <div className="modal-footer">
-                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={this.resetState}>Zatvori</button>
                                             <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Spremi</button>
                                         </div>
                                     </form>
@@ -118,7 +122,7 @@ class Organization extends React.Component {
                         <Card>
                             <OrganizationIcon />
                             <h1>{organization && organization.name}</h1>
-                            <p>{organization && organization.description}</p>
+                            <div className="description">{organization && organization.description}</div>
                             < button type="button" data-bs-toggle="modal" data-bs-target="#updateOrganization">
                                 Uredi
                             </button>
@@ -154,7 +158,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     setOrganization: organization => dispatch(setOrganization(organization)),
     setOrganizationMembers: organizationMembers => dispatch(setOrganizationMembers(organizationMembers)),
-    setPosts: posts => dispatch(setPosts(posts))
+    setPosts: posts => dispatch(setPosts(posts)),
+    setCategories: categories => dispatch(setCategories(categories))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Organization));

@@ -12,7 +12,6 @@ import HomePage from './components/homepage/homepage.component';
 import Header from './components/header/header.component';
 
 import './App.css';
-import Organizations from './components/organizations/organizations.component';
 import AdministrationPage from './components/administration/administration-page.component';
 import { performRequest } from './utils/rest-util';
 import { Toaster } from 'react-hot-toast';
@@ -20,6 +19,8 @@ import OrganizationPage from './components/organization-page/organization-page.c
 import { checkHasRole } from './utils/role-util';
 import { Roles } from './enums/Role';
 import OrganizationsPage from './components/organizations-page/organizations-page.component';
+import PostPage from './components/post-page/post-page.component';
+import ChatPage from './components/chat-page/chat-page.component';
 
 class App extends React.Component {
 
@@ -46,6 +47,8 @@ class App extends React.Component {
               <Route exact path='/' component={HomePage} />
               <Route exact path='/organizations' component={OrganizationsPage} />
               <Route exact path='/organizations/:id' component={OrganizationPage} />
+              <Route exact path='/posts/:id' component={PostPage} />
+              <Route exact path='/chats/:id' component={ChatPage} />
               <Route exact path='/administration' render={() => !checkHasRole(currentUser, Roles.SYSTEM_ADMIN) ? (<Redirect to='/'></Redirect>) : <AdministrationPage />} />
             </>
           }

@@ -116,7 +116,7 @@ class Posts extends React.Component {
                 <CustomButton className="new-post" data-bs-toggle="modal" data-bs-target="#newPost">Nova</CustomButton>
                 <ListView pageCount={posts.totalPages} handlePageChanged={this.handlePageClick}>
                     {posts.content.map(post =>
-                        <ListItem clickable={true} cover={<EventIcon />}>
+                        <ListItem onClick={() => this.props.history.push(`/posts/${post.id}`)} clickable={true} cover={<EventIcon />}>
                             <h5>{post.title}</h5>
                             <span className="badge bg-info text-dark">{post.category.name}</span>
                             <span className={`badge ${post.active ? "bg-success" : "bg-danger"}`}>{post.active ? "Aktivna" : "Neaktivna"}</span>

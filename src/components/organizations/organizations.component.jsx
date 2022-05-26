@@ -20,7 +20,6 @@ const Organizations = ({ organizations, ...props }) => {
             {organizations.content.map(organization =>
                 <ListItem onClick={() => props.history.push(`/organizations/${organization.id}`)} clickable={true} cover={<OrganizationIcon />}>
                     <h5>{organization.name}</h5>
-                    <div>{organization.description}</div>
                     <span className={`badge ${organization.active ? "bg-success" : "bg-danger"}`}>{organization.active ? "Aktivna" : "Neaktivna"}</span>
                 </ListItem>
             )}
