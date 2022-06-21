@@ -45,7 +45,7 @@ class Organization extends React.Component {
         event.preventDefault();
 
         const { id, name, description, active } = this.state;
-        const { setOrganization } = this.props;
+        const { setOrganization, setPosts } = this.props;
 
         const body = {
             id: id,
@@ -55,8 +55,10 @@ class Organization extends React.Component {
         }
 
         const response = await performRequest(`/api/organizations/${id}`, 'put', body);
-
         setOrganization(response ? response.payload : null);
+
+        const posts = await performRequest(`/api/posts?organizationId=${id}&size=4`, 'get', null);
+        setPosts(posts ? posts.payload : { content: [] });
     }
 
     async componentDidMount() {
@@ -78,6 +80,24 @@ class Organization extends React.Component {
 
         const categoriesResponse = await performRequest('/api/categories?active=true', 'get', null);
         setCategories(categoriesResponse ? categoriesResponse.payload : { content: [] });
+    }
+
+    verifyOrganization = async event => {
+
+        event.preventDefault();
+
+        const { setOrganization, organization } = this.props;
+
+        const body = {
+            id: organization.id,
+            name: organization.name,
+            description: organization.description,
+            active: organization.active,
+            verified: true
+        }
+
+        const response = await performRequest(`/api/organizations/${organization.id}`, 'put', body);
+        setOrganization(response ? response.payload : null);
     }
 
     render() {
@@ -123,9 +143,17 @@ class Organization extends React.Component {
                             <OrganizationIcon />
                             <h1>{organization && organization.name}</h1>
                             <div className="large-text">{organization && organization.description}</div>
+                            {organization.currentUserMember.role.id == 1 &&
+                                <div className="large-text">Kod za pridruživanje: {organization.organizationCode.value}</div>
+                            }
                             < button type="button" data-bs-toggle="modal" data-bs-target="#updateOrganization">
                                 Uredi
                             </button>
+                            {checkHasRole(currentUser, Roles.SYSTEM_ADMIN) && !organization.verified &&
+                                < button type="button" onClick={this.verifyOrganization}>
+                                    Odobri
+                                </button>
+                            }
                         </Card>
                         <div className="organization-tab">
                             <nav>

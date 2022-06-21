@@ -162,7 +162,7 @@ class PostPage extends React.Component {
                             </nav>
                             <div className="tab-content" id="nav-tabContent">
                                 <div className="tab-pane fade show active" id="nav-chats" role="tabpanel" aria-labelledby="nav-chats-tab">
-                                    <Chats />
+                                    <Chats withPostInfo={false}/>
                                 </div>
                             </div>
                         </div>

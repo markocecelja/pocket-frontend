@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import { setCurrentUser } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
 
-import SignIn from './components/sign-in/sign-in.component';
+import SignIn from './components/authentication/sign-in.component';
 import HomePage from './components/homepage/homepage.component';
 import Header from './components/header/header.component';
 
@@ -21,6 +21,7 @@ import { Roles } from './enums/Role';
 import OrganizationsPage from './components/organizations-page/organizations-page.component';
 import PostPage from './components/post-page/post-page.component';
 import ChatPage from './components/chat-page/chat-page.component';
+import Registration from './components/authentication/registration.component';
 
 class App extends React.Component {
 
@@ -42,6 +43,7 @@ class App extends React.Component {
         {currentUser && <Header />}
         <Switch>
           <Route exact path='/signIn' render={() => currentUser ? (<Redirect to='/'></Redirect>) : <SignIn />} />
+          <Route exact path='/registration' render={() => currentUser ? (<Redirect to='/'></Redirect>) : <Registration />} />
           {currentUser &&
             <>
               <Route exact path='/' component={HomePage} />

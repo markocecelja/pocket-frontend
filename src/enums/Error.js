@@ -6,9 +6,12 @@ export const Errors = {
 	BAD_CREDENTIALS: 'Netočno korisničko ime ili lozinka!',
 	UNAUTHORIZED: 'Nije dozvoljeno!',
 	NON_EXISTING_ORGANIZATION: 'Organizacija ne postoji!',
-	NON_EXISTING_CATEGORY: 'Kategorija ne postoji',
+	NON_EXISTING_CATEGORY: 'Kategorija ne postoji!',
 	NON_EXISTING_POST: "Objava ne postoji!",
-	NON_EXISTING_ORGANIZATION_ROLE: "Uloga organizacije ne postoji!"
+	NON_EXISTING_ORGANIZATION_ROLE: "Uloga organizacije ne postoji!",
+	NON_EXISTING_CHAT: "Traženi razgovor ne postoji!",
+	PASSWORD_MISMATCH: "Lozinke se ne podudaraju!",
+	USERNAME_ALREADY_IN_USE: "Korisničko ime se već koristi!"
 }
 
 function getErrorByCode(code) {

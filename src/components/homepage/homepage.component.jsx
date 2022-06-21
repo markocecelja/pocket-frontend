@@ -50,26 +50,24 @@ class HomePage extends React.Component {
                             <Avatar />
                             <h1>{`${currentUser.firstName} ${currentUser.lastName}`}</h1>
                         </Card>
+                        {currentUser && !checkHasRole(currentUser, Roles.SYSTEM_ADMIN) &&
                         <div className="hoempage-tab">
                             <nav>
                                 <div className="nav nav-tabs" id="nav-tab" role="tablist">
                                     <button className="nav-link active" id="nav-chats-tab" data-bs-toggle="tab" data-bs-target="#nav-chats" type="button" role="tab" aria-controls="nav-chats" aria-selected="true">Moje razgovori</button>
-                                    {currentUser && !checkHasRole(currentUser, Roles.STUDENT) &&
                                         <button className="nav-link" id="nav-organizations-tab" data-bs-toggle="tab" data-bs-target="#nav-organizations" type="button" role="tab" aria-controls="nav-organizations" aria-selected="false">Moje organizacije</button>
-                                    }
                                 </div>
                             </nav>
                             <div className="tab-content" id="nav-tabContent">
                                 <div className="tab-pane fade show active" id="nav-chats" role="tabpanel" aria-labelledby="chats">
-                                    <Chats handlePageChanged={this.handleOrganizationPageClick} />
+                                    <Chats withPostInfo={true} handlePageChanged={this.handleOrganizationPageClick} />
                                 </div>
-                                {currentUser && !checkHasRole(currentUser, Roles.STUDENT) &&
                                     <div className="tab-pane fade" id="nav-organizations" role="tabpanel" aria-labelledby="organizations">
-                                        <Organizations handlePageChanged={this.handleOrganizationPageClick} />
+                                        <Organizations clickable={true} handlePageChanged={this.handleOrganizationPageClick} />
                                     </div>
-                                }
                             </div>
                         </div>
+                        }
                     </div>
                 }
             </>

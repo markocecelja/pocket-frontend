@@ -13,14 +13,15 @@ import ListItem from "../list-view/list-item/list-item.component";
 import { ReactComponent as OrganizationIcon } from "../../assets/organization.svg"
 import ListView from "../list-view/list-view.component";
 
-const Organizations = ({ organizations, ...props }) => {
+const Organizations = ({organizations, clickable, ...props }) => {
 
     return (
         <ListView pageCount={organizations.totalPages} {...props}>
             {organizations.content.map(organization =>
-                <ListItem onClick={() => props.history.push(`/organizations/${organization.id}`)} clickable={true} cover={<OrganizationIcon />}>
+                <ListItem onClick={clickable ? () => props.history.push(`/organizations/${organization.id}`) : () => {return}} clickable={clickable} cover={<OrganizationIcon />}>
                     <h5>{organization.name}</h5>
                     <span className={`badge ${organization.active ? "bg-success" : "bg-danger"}`}>{organization.active ? "Aktivna" : "Neaktivna"}</span>
+                    <span className={`badge bg-primary`}>{organization.verified ? "Odobrena" : "Čeka odobrenje"}</span>
                 </ListItem>
             )}
         </ListView>

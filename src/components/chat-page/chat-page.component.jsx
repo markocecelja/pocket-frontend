@@ -16,6 +16,8 @@ import SockJsClient from 'react-stomp';
 import Moment from "moment";
 import InfiniteScroll from "react-infinite-scroll-component";
 
+import { selectCurrentUser } from "../../redux/user/user.selectors";
+
 class ChatPage extends React.Component {
 
     constructor(props) {
@@ -55,11 +57,11 @@ class ChatPage extends React.Component {
 
     onMessageReceived = async (msg) => {
 
-        const { setChatMessages } = this.props;
+        const { chat, setChatMessages } = this.props;
 
         let { id } = this.props.match.params;
 
-        const messagesResponse = await performRequest(`/api/messages?chatId=${id}&size=4`, 'get', null);
+        const messagesResponse = await performRequest(`/api/messages?postId=${chat.post.id}&size=4`, 'get', null);
         setChatMessages(messagesResponse ? messagesResponse.payload : { content: [] });
         this.setState({ messages: messagesResponse ? messagesResponse.payload.content : [] });
     }
@@ -70,7 +72,7 @@ class ChatPage extends React.Component {
 
         const { chat, setChatMessages } = this.props;
 
-        const messagesResponse = await performRequest(`/api/messages?chatId=${id}&size=4&page=${chat.messages.pageable.pageNumber + 1}`, 'get', null);
+        const messagesResponse = await performRequest(`/api/messages?postId=${chat.post.id}&size=4&page=${chat.messages.pageable.pageNumber + 1}`, 'get', null);
         setChatMessages(messagesResponse ? messagesResponse.payload : { content: [] });
         this.setState({ messages: this.state.messages.concat(messagesResponse ? messagesResponse.payload.content : []) });
     }
@@ -83,14 +85,14 @@ class ChatPage extends React.Component {
         const chatResponse = await performRequest(`/api/chats/${id}`, 'get', null);
         setChat(chatResponse ? chatResponse.payload : null);
 
-        const messagesResponse = await performRequest(`/api/messages?chatId=${id}&size=4`, 'get', null);
+        const messagesResponse = await performRequest(`/api/messages?postId=${chatResponse.payload.post.id}&size=4`, 'get', null);
         setChatMessages(messagesResponse ? messagesResponse.payload : { content: [] });
         this.setState({ messages: messagesResponse ? messagesResponse.payload.content : [] });
     }
 
     render() {
 
-        const { chat } = this.props;
+        const { chat, currentUser } = this.props;
         const { messages } = this.state;
 
         Moment.locale('hr');
@@ -116,7 +118,7 @@ class ChatPage extends React.Component {
                                     scrollableTarget="scrollableMessages"
                                 >
                                     {messages.map(message =>
-                                        <div className={message.createdByCurrentUser ? "msg msg--right" : "msg msg--left"}>
+                                        <div className={message.createdBy.type === "ORGANIZATION" ? "msg msg--right" : "msg msg--left"}>
                                             <blockquote className="large-text">
                                                 {message.text}
                                                 <div className="date">{Moment(message.createdDateTime).format('DD.MM.YYYY. HH:mm:ss')}</div>
@@ -147,6 +149,7 @@ class ChatPage extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
     chat: getChat,
+    currentUser: selectCurrentUser
 });
 
 const mapDispatchToProps = dispatch => ({

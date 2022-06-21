@@ -10,6 +10,11 @@ import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
 import { performRequest } from "../../utils/rest-util";
 
+import Organizations from "../organizations/organizations.component";
+
+import './administration-page.styles.scss'
+import { setOrganizations } from "../../redux/organization/organization.actions";
+
 class AdministrationPage extends React.Component {
 
     constructor(props) {
@@ -46,11 +51,21 @@ class AdministrationPage extends React.Component {
     }
 
     async componentDidMount() {
-        const { setCategories } = this.props;
+        const { setCategories, setOrganizations } = this.props;
 
         const response = await performRequest('/api/categories', 'get', null);
-
         setCategories(response ? response.payload : { content: [] });
+
+        const organizationsResponse = await performRequest('/api/organizations?verified=false&size=4', 'get', null);
+        setOrganizations(organizationsResponse ? organizationsResponse.payload : { content: [] });
+    }
+
+    handleOrganizationPageClick = async event => {
+
+        const { setOrganizations } = this.props;
+
+        const organizationsResponse = await performRequest(`/api/organizations?verified=false&page=${event.selected}&size=4`, 'get', null);
+        setOrganizations(organizationsResponse ? organizationsResponse.payload : { content: [] });
     }
 
     render() {
@@ -81,12 +96,13 @@ class AdministrationPage extends React.Component {
                 <nav>
                     <div className="nav nav-tabs" id="nav-tab" role="tablist">
                         <button className="nav-link active" id="nav-category-tab" data-bs-toggle="tab" data-bs-target="#nav-category" type="button" role="tab" aria-controls="nav-category" aria-selected="true">Kategorije</button>
+                        <button className="nav-link" id="nav-organization-tab" data-bs-toggle="tab" data-bs-target="#nav-organization" type="button" role="tab" aria-controls="nav-organization" aria-selected="true">Odobravanje organizacije</button>
                     </div>
                 </nav>
                 <div className="tab-content" id="nav-tabContent">
                     <div className="tab-pane fade show active" id="nav-category" role="tabpanel" aria-labelledby="nav-category-tab">
                         <div className="container table-responsive">
-                            <CustomButton data-bs-toggle="modal" data-bs-target="#createCategory"> Nova </CustomButton>
+                            <CustomButton className="new-category" data-bs-toggle="modal" data-bs-target="#createCategory"> Nova </CustomButton>
                             <table className="table table-striped table-hover">
                                 <thead className="thead-dark">
                                     <tr>
@@ -103,6 +119,9 @@ class AdministrationPage extends React.Component {
                             </table>
                         </div>
                     </div>
+                    <div className="tab-pane fade" id="nav-organization" role="tabpanel" aria-labelledby="nav-organization-tab">
+                        <Organizations clickable={true} handlePageChanged={this.handleOrganizationPageClick}/>
+                    </div>
                 </div>
             </div>
         );
@@ -114,7 +133,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setCategories: categories => dispatch(setCategories(categories))
+    setCategories: categories => dispatch(setCategories(categories)),
+    setOrganizations: organizations => dispatch(setOrganizations(organizations))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdministrationPage);
