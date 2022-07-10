@@ -61,7 +61,7 @@ class ChatPage extends React.Component {
 
         let { id } = this.props.match.params;
 
-        const messagesResponse = await performRequest(`/api/messages?postId=${chat.post.id}&size=4`, 'get', null);
+        const messagesResponse = await performRequest(`/api/messages?postId=${chat.post.id}&userId=${chat.user.id}&size=4`, 'get', null);
         setChatMessages(messagesResponse ? messagesResponse.payload : { content: [] });
         this.setState({ messages: messagesResponse ? messagesResponse.payload.content : [] });
     }
@@ -72,7 +72,7 @@ class ChatPage extends React.Component {
 
         const { chat, setChatMessages } = this.props;
 
-        const messagesResponse = await performRequest(`/api/messages?postId=${chat.post.id}&size=4&page=${chat.messages.pageable.pageNumber + 1}`, 'get', null);
+        const messagesResponse = await performRequest(`/api/messages?postId=${chat.post.id}&userId=${chat.user.id}&size=4&page=${chat.messages.pageable.pageNumber + 1}`, 'get', null);
         setChatMessages(messagesResponse ? messagesResponse.payload : { content: [] });
         this.setState({ messages: this.state.messages.concat(messagesResponse ? messagesResponse.payload.content : []) });
     }
@@ -85,7 +85,7 @@ class ChatPage extends React.Component {
         const chatResponse = await performRequest(`/api/chats/${id}`, 'get', null);
         setChat(chatResponse ? chatResponse.payload : null);
 
-        const messagesResponse = await performRequest(`/api/messages?postId=${chatResponse.payload.post.id}&size=4`, 'get', null);
+        const messagesResponse = await performRequest(`/api/messages?postId=${chatResponse.payload.post.id}&userId=${chatResponse.payload.user.id}&size=4`, 'get', null);
         setChatMessages(messagesResponse ? messagesResponse.payload : { content: [] });
         this.setState({ messages: messagesResponse ? messagesResponse.payload.content : [] });
     }

@@ -4,6 +4,7 @@ export const Errors = {
 	JSON_PARSE_ERROR: 'Nešto nije u redu, pokušajte ponovno kasnije!',
 	BAD_REQUEST: 'Nešto nije u redu, pokušajte ponovno kasnije!',
 	BAD_CREDENTIALS: 'Netočno korisničko ime ili lozinka!',
+	NON_EXISTING_ROLE: 'Uloga ne postoji!',
 	UNAUTHORIZED: 'Nije dozvoljeno!',
 	NON_EXISTING_ORGANIZATION: 'Organizacija ne postoji!',
 	NON_EXISTING_CATEGORY: 'Kategorija ne postoji!',

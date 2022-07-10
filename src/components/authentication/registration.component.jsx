@@ -20,7 +20,10 @@ class Registration extends React.Component {
             lastName: '',
             username: '',
             password: '',
-            confirmationPassword: ''
+            confirmationPassword: '',
+            role: {
+                id: '2'
+            }
         }
     }
 

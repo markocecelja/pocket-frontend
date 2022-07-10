@@ -143,7 +143,7 @@ class Organization extends React.Component {
                             <OrganizationIcon />
                             <h1>{organization && organization.name}</h1>
                             <div className="large-text">{organization && organization.description}</div>
-                            {organization.currentUserMember.role.id == 1 &&
+                            {organization.currentUserMember && organization.currentUserMember.role.id == 1 &&
                                 <div className="large-text">Kod za pridruživanje: {organization.organizationCode.value}</div>
                             }
                             < button type="button" data-bs-toggle="modal" data-bs-target="#updateOrganization">
